@@ -1,0 +1,11 @@
+D:\Курсовая\webAPI\webAPI\bin\Debug\webAPI.exe.config
+D:\Курсовая\webAPI\webAPI\bin\Debug\webAPI.exe
+D:\Курсовая\webAPI\webAPI\bin\Debug\webAPI.pdb
+D:\Курсовая\webAPI\webAPI\obj\Debug\webAPI.csproj.AssemblyReference.cache
+D:\Курсовая\webAPI\webAPI\obj\Debug\webAPI.csproj.SuggestedBindingRedirects.cache
+D:\Курсовая\webAPI\webAPI\obj\Debug\webAPI.csproj.CoreCompileInputs.cache
+D:\Курсовая\webAPI\webAPI\obj\Debug\webAPI.exe
+D:\Курсовая\webAPI\webAPI\obj\Debug\webAPI.pdb
+D:\Курсовая\webAPI\webAPI\bin\Debug\Newtonsoft.Json.dll
+D:\Курсовая\webAPI\webAPI\bin\Debug\Newtonsoft.Json.xml
+D:\Курсовая\webAPI\webAPI\obj\Debug\webAPI.csproj.CopyComplete
