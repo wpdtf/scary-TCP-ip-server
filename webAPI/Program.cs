@@ -17,18 +17,39 @@ namespace webAPI
 
             while (true)
             {
-                //Прослушивание порта
-                TcpClient client = serverSocket.AcceptTcpClient();
-                NetworkStream stream = client.GetStream();
+                try
+                {
+                    //Прослушивание порта
+                    TcpClient client = serverSocket.AcceptTcpClient();
+                    NetworkStream stream = client.GetStream();
 
-                BinaryReader reader = new BinaryReader(stream);
-                string message = reader.ReadString();
-                Console.WriteLine("Получено: " + message);
-                BinaryWriter writer = new BinaryWriter(stream);
+                    BinaryReader reader = new BinaryReader(stream);
+                    string message = reader.ReadString();
+                    Console.WriteLine("Получено: " + message);
+                    BinaryWriter writer = new BinaryWriter(stream);
+                    //Отправка полученного запроса в СУБД
+                    writer.Write(sql.sqlServer(message));
+                    writer.Flush();
+                    writer.Close();
+                    reader.Close();
+                    stream.Close();
+                    client.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("ошибка: " + ex.ToString());
+                }
+            }
+        }
 
+        private class sql
+        {
+            public static string ConString = @"Data Source=192.168.0.105,1433\sqlexpress;Initial Catalog=NevaLink;User ID=dmitryHome;Password=wpdtf1234";
+
+            public static string sqlServer(string message)
+            {
                 string results = "";
-                //Отправка полученного запроса в СУБД
-                SqlConnection con = new SqlConnection(sqlCon.ConString);
+                SqlConnection con = new SqlConnection(sql.ConString);
                 con.Open();
                 SqlCommand com = new SqlCommand(message, con);
                 SqlDataReader read = com.ExecuteReader();
@@ -45,36 +66,17 @@ namespace webAPI
                         results = results + "^" + Field;
 
                     }
-                    Console.WriteLine("Отправлено: " + results);
-                    writer.Write(results);
-
+                    Console.WriteLine("Отправлено: запрос с данными");
                 }
                 else
                 {
                     results = "No";
-                    Console.WriteLine("Отправлено: " + results);
-                    writer.Write(results);
+                    Console.WriteLine("Отправлено: пустой ответ");
                 }
-
-
                 read.Close();
                 con.Close();
-
-
-                writer.Flush();
-
-                writer.Close();
-                reader.Close();
-                stream.Close();
-                client.Close();
-
+                return results;
             }
-        }
-
-        public class sqlCon
-        {
-            public static string ConString = @"Data Source=192.168.0.105,1433\sqlexpress;Initial Catalog=NevaLink;User ID=dmitryHome;Password=wpdtf1234";
-
         }
     }
 }
